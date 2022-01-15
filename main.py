@@ -47,7 +47,7 @@ def lihatBuku():
   print("===================== Lihat Buku =======================")
   id_buku = input("Masukkan id buku = ")
 
-  cursor.execute("SELECT * FROM buku WHERE id = ?", id_buku)
+  cursor.execute("SELECT * FROM buku WHERE id = ?", [id_buku])
   
   buku = cursor.fetchone()
 
@@ -63,7 +63,7 @@ def editBuku():
   print("====================== Edit Buku =======================")
   id_buku = input("Masukkan id buku = ")
 
-  cursor.execute("SELECT COUNT(*) as total FROM buku WHERE id = ?", id_buku)
+  cursor.execute("SELECT COUNT(*) as total FROM buku WHERE id = ?", [id_buku])
   
   data_buku = cursor.fetchone()
   total = data_buku['total']
@@ -93,13 +93,13 @@ def hapusBuku():
   print("====================== Hapus Buku =======================")
   id_buku = input("Masukkan id buku = ")
 
-  cursor.execute("SELECT COUNT(*) as total FROM buku WHERE id = ?", id_buku)
+  cursor.execute("SELECT COUNT(*) as total FROM buku WHERE id = ?", [id_buku])
   
   data_buku = cursor.fetchone()
   total = data_buku['total']
 
   if total > 0:
-    cursor.execute("DELETE FROM buku WHERE id = ?", (id_buku))
+    cursor.execute("DELETE FROM buku WHERE id = ?", [id_buku])
     conn.commit()
 
     print("========================================================")
@@ -107,6 +107,7 @@ def hapusBuku():
   else:
     print("Buku Tidak Ditemukan")
 
+# Pilih Menu
 def pilihMenu(no):
   if no == 1:
     tampilBuku()
@@ -121,6 +122,7 @@ def pilihMenu(no):
   else:
     print("No Harus Di antara 1-5")
 
+# Main
 def main():
   print("===================== Daftar Menu ======================")
 
@@ -143,8 +145,7 @@ def main():
 
   pilihMenu(input_no)
 
-# Main
-
+# Main Proram
 print("========== Sistem Pendataan Buku Perpustakaan ==========")
 
 mulai = True
